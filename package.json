@@ -6,8 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "node --watch worker.js",
-    "start": "node index.js"
+
+  "start": "concurrently \"node index.js\" \"node worker.js\"",
+  "start:dev": "concurrently \"node --watch index.js\" \"node --watch worker.js\""
+
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +22,7 @@
     "@langchain/textsplitters": "^0.1.0",
     "@types/node": "^24.3.0",
     "bullmq": "^5.58.0",
+    "concurrently": "^9.2.0",
     "cores": "^0.8.5",
     "cors": "^2.8.5",
     "pdf-parse": "^1.1.1"
