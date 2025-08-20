@@ -5,6 +5,7 @@ import { Queue } from "bullmq";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import dotenv from "dotenv";
+import { storage } from "./cloudinaryConfig.js";
 dotenv.config();
 
 const apiKey = process.env.GEMINI_API_KEY || "";
@@ -16,15 +17,6 @@ const queue = new Queue("file-upload-queue", {
   },
 });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
 const upload = multer({ storage });
 
 const app = express();
@@ -33,16 +25,13 @@ app.use(cors());
 app.get("/", (req, res) => res.json({ status: "done" }));
 
 app.post("/upload/pdf", upload.single("pdf"), (req, res) => {
-  queue.add(
-    "file-ready",
-    JSON.stringify({
-      filename: req.file.originalname,
-      destination: req.file.destination,
-      path: req.file.path,
-    })
-  );
-  console.log(req.file);
-  return res.json({ message: "uploaded" });
+ queue.add("file-ready", JSON.stringify({
+    filename: req.file.originalname,
+    url: req.file.path, // Cloudinary URL
+  }));
+
+  console.log("Uploaded file info:", req.file);
+  return res.json({ message: "uploaded", url: req.file.path });
 });
 const embeddings = new GoogleGenerativeAIEmbeddings({
   model: "embedding-001",
