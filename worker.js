@@ -36,8 +36,7 @@ const worker = new Worker(
   {
     concurrency: 100,
     connection: {
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      url: process.env.UPSTASH_REDIS_TCP_URL,
      
     },
   }
