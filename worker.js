@@ -43,8 +43,8 @@ const worker = new Worker(
 
 // Error handling
 worker.on("error", (err) => {
-  console.error("❌ Worker error:", err);
+  console.error(" Worker error:", err);
 });
 worker.on("failed", (job, err) => {
-  console.error(`❌ Job ${job.id} failed:`, err);
+  console.error(`Job ${job.id} failed:`, err);
 });
