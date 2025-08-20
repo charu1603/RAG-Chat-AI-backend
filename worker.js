@@ -25,7 +25,7 @@ const worker = new Worker(
       {
         url: process.env.QDRANT_API_URL,
         apiKey: process.env.QDRANT_API_KEY,
-        collectionName: "chat-ai",
+        collectionName: "chat-testing",
       }
     );
 
