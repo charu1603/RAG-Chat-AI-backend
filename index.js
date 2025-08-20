@@ -13,6 +13,7 @@ const apiUrl = process.env.GEMINI_API_URL + apiKey;
 const queue = new Queue("file-upload-queue", {
   connection: {
     url: process.env.UPSTASH_REDIS_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN,
   },
 });
 
