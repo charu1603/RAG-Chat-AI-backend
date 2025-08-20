@@ -31,7 +31,7 @@ const worker = new Worker(
 
     // Add docs
     await vectorStore.addDocuments(docs);
-    console.log(`✅ All docs are added to vector store`);
+    console.log(` All docs are added to vector store`);
   },
   {
     concurrency: 100,
